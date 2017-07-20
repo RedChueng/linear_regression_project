@@ -119,3 +119,20 @@ pp.pprint(B)
 pp.pprint (matxMultiply(A,B))
 
 
+#构造增广矩阵，假设A，b行数相同
+def augmentMatrix(A, b):
+	for a in A:
+		for b in B:
+			for i in range(len(b)):
+				a.append(b[i])
+			break
+	return A
+
+a = [['a11','a12'],['a21','a22']]
+b = [['b1'],['b2']]
+for e in a:
+	for f in b:
+		for i in range(len(f)):
+			e.append(f[i])
+		break
+print a
