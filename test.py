@@ -127,7 +127,7 @@ def augmentMatrix(A, b):
 		a[i].append(b[i][0])
 	return a
 
-# a = [['a11','a12'],['a21','a22']]
+a = [['a11','a12'],['a21','a22']]
 # b = [['b1'],['b2']]
 
 
@@ -137,7 +137,25 @@ def augmentMatrix(A, b):
 
 # TODO r1 <---> r2
 # 直接修改参数矩阵，无返回值
-
 def swapRows(M, r1, r2):
-	
+	M[r1],M[r2] = M[r2],M[r1]
 	pass
+
+# TODO r1 <--- r1 * scale， scale!=0
+# 直接修改参数矩阵，无返回值
+def scaleRow(M, r, scale):
+	for i in range(len(M[r])):
+		M[r][i] = M[r][i]*scale
+	pass
+
+# TODO r1 <--- r1 + r2*scale
+# 直接修改参数矩阵，无返回值
+def addScaledRow(M, r1, r2, scale):
+	for i in range(len(M[r1])):
+		M[r1][i] += M[r2][i] * scale
+	pass
+
+
+print A
+addScaledRow(A, 0, 1 ,3)
+print A
