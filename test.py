@@ -156,6 +156,31 @@ def addScaledRow(M, r1, r2, scale):
 	pass
 
 
-print A
+pp.pprint(A)
 addScaledRow(A, 0, 1 ,3)
-print A
+pp.pprint(A)
+
+# TODO 实现 Gaussain Jordan 方法求解 Ax = b
+# def gj_Solve(A, b, decPts=4, epsilon = 1.0e-16):
+# 	rA = shape(A)[0]
+# 	rb = shape(b)[0]
+# 	if rA != rb:#检查A，b是否行数相同
+# 		return None
+# 	else:
+# 		Ab = augmentMatrix(A, b)#构造增广矩阵Ab
+
+
+
+a = [[1,3,1],[2,1,1],[2,2,1]]
+b = [11,8,10]
+print zip(*a)
+
+x = 0
+
+for e in map(list,zip(*a)):
+	for i in range(len(e)):
+		for j in range(i, len(e)):
+			if e[j] > e[j + 1]:
+				x = e[j]
+	print e.find(x)
+
