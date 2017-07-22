@@ -144,8 +144,11 @@ def swapRows(M, r1, r2):
 # TODO r1 <--- r1 * scale， scale!=0
 # 直接修改参数矩阵，无返回值
 def scaleRow(M, r, scale):
-	for i in range(len(M[r])):
-		M[r][i] = M[r][i]*scale
+	if scale == 0:
+		raise ValueError
+	else:
+		for i in range(len(M[r])):
+			M[r][i] = M[r][i]*scale
 	pass
 
 # TODO r1 <--- r1 + r2*scale
@@ -225,3 +228,47 @@ b = [[11],[8],[10]]
 
 print gj_Solve(a,b)
 
+
+
+print '测试奇异矩阵的结果---------------------\n'
+A = [[1,0,4],[0,1,0],[0,0,0]]
+b = [[1],[2],[3]]
+
+pp.pprint(A)
+print '\n'
+pp.pprint(b)
+print '\n'
+print gj_Solve(A, b)
+print '\n'
+
+print '测试非奇异矩阵的结果---------------------\n'
+A = [[1,3,1],[2,1,1],[2,2,1]]
+b = [[11],[8],[10]]
+
+pp.pprint(A)
+print '\n'
+pp.pprint(b)
+print '\n'
+
+print '求解 x 使得 Ax = b\n'
+
+x = gj_Solve(A, b)
+
+pp.pprint(x)
+print '\n'
+print '计算 Ax \n'
+
+Ax = matxMultiply(A, x)
+
+pp.pprint(Ax)
+print '\n'
+
+print '比较 Ax 与 b \n'
+
+def compare(A, B):
+	if A == B:
+		return True
+	else:
+		return False
+
+print compare(Ax,b)
