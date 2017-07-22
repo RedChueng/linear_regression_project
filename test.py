@@ -161,26 +161,67 @@ addScaledRow(A, 0, 1 ,3)
 pp.pprint(A)
 
 # TODO 实现 Gaussain Jordan 方法求解 Ax = b
-# def gj_Solve(A, b, decPts=4, epsilon = 1.0e-16):
-# 	rA = shape(A)[0]
-# 	rb = shape(b)[0]
-# 	if rA != rb:#检查A，b是否行数相同
-# 		return None
-# 	else:
-# 		Ab = augmentMatrix(A, b)#构造增广矩阵Ab
+def gj_Solve(A, b, decPts=4, epsilon = 1.0e-16):
+	res = [[0] for row in A]  # 用于存储计算结果
+	rA = shape(A)[0]
+	rb = shape(b)[0]
+	if rA != rb: # 检查A，b是否行数相同
+		return None
+	else:
+		s = 0 # 用于储存忽略行变换的次数，此次数与行数相等时，说明得到了结果
+		Ab = augmentMatrix(A, b) # 构造增广矩阵Ab
+		j = 0
+		while j < (shape(Ab)[1]):
+			c = [] # 用于储存当前列主对角线及以下元素
+			for i in range(j, shape(Ab)[0]):
+				c.append(abs(Ab[i][j])) # 对元素取绝对值
+			# print '第{0}列主对角线及以下元素绝对值的列表为{1}'.format(j, c)
+			m = max(c) # 获得c中的最大值
+			# print '第{0}列的最大值为{1}'.format(j, m)
+			# print 'm:', m
+			# print 'i:', i 
+			# print 'j:', j
+			r = c.index(max(c)) + j # 获得绝对值最大的元素所在的行
+			if m <= epsilon:
+				return None
+			elif m == 1.0 and r == j:
+				s += 1
+				j += 1
+				# print 's+1'
+				pass
+			else:
+				# print '第{0}列最大值所在的行为{1}'.format(j, r)
+				swapRows(Ab, j, r) # 使用第一个行变换，将绝对值最大值所在行交换到对角线元素所在行（行c）
+				# pp.pprint(Ab)
+				scale = 1.0/Ab[j][j] # 第j行第j列元素的乘子
+				# print '第二个行变换的scale是：', scale
+				scaleRow(Ab, j, scale) # 使用第二个行变换，将列c的对角线元素缩放为1
+				# print '第二个行变换的结果是：'
+				# pp.pprint(Ab)
+				for k in range(shape(Ab)[0]): # 多次使用第三个行变换，将列c的其他元素消为0
+					if k == j:
+						pass
+					else:
+						addScaledRow(Ab, k, j, -Ab[k][j]) # 使用第三个行变换，将列c的其他元素消为0
+						# print '第{0}次使用第三个行变换'.format(k)
+						# pp.pprint(Ab)
+				j = 0
+				s = 0
+			# print 's:', s
+			if s == shape(Ab)[0]:
+				break
 
+		matxRound(Ab, decPts) # 对增广矩阵元素进行四舍五入到特定小数位
+		resc = shape(Ab)[0]
+		for x in range(shape(Ab)[0]):
+			res[x][0] += Ab[x][resc]
+		# print s
+		return res
+		
 
 
 a = [[1,3,1],[2,1,1],[2,2,1]]
-b = [11,8,10]
-print zip(*a)
+b = [[11],[8],[10]]
 
-x = 0
-
-for e in map(list,zip(*a)):
-	for i in range(len(e)):
-		for j in range(i, len(e)):
-			if e[j] > e[j + 1]:
-				x = e[j]
-	print e.find(x)
+print gj_Solve(a,b)
 
