@@ -272,3 +272,42 @@ def compare(A, B):
 		return False
 
 print compare(Ax,b)
+
+# TODO 实现线性回归
+def linearRegression(points):
+	X = [[points[i][0],1] for i in range(len(points))]
+	Y = [[points[i][1]]for i in range(len(points))]
+
+	XT = transpose(X)
+
+	A = matxMultiply(XT, X)
+	b = matxMultiply(XT, Y)
+
+	h = gj_Solve(A, b)
+
+	m = h[0]
+	b = h[1]
+	return m, b
+
+# TODO 构造线性函数
+
+m = 2
+b = 4
+
+# TODO 构造 100 个线性函数上的点，加上适当的高斯噪音
+
+gs = [random.gauss(0,1) for i in range(100)] # 产生100个服从标准正态分布的数
+
+# print gs
+
+x = [random.uniform(-10,10) for i in range(100)]
+y = [m*x[i] + b + gs[i] for i in range(100)]
+
+# print x
+# print y
+
+points = map(list,zip(x, y))
+
+# print points
+
+print linearRegression(points)
